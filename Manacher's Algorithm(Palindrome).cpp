@@ -1,4 +1,5 @@
 //MANACHER'S ALGORITHM.
+//DEVELOPED BY AMAN JAIN
 #include <iostream>
 #include <string>
 
