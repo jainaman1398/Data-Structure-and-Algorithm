@@ -1,58 +1,57 @@
-#include<iostream>
-#include<cstdio>
-#include<vector>
-#include<queue>
-#define pp pair<int,int>
+#include <bits/stdc++.h>
 using namespace std;
-class Prioritize
+typedef long long int ii;
+typedef pair<int,int> pi;
+vector<pi> g[10001];
+typedef vector<pi>::iterator vit;
+bool visited[10001];
+ii dis[10001];
+
+void logic()
 {
-public:
-    int operator() ( const pair<int, int>& p1, const pair<int, int>& p2 )
+    ii x,y,i;
+   for(i=0;i<=10000;i++)
+    dis[i]=9999999999;
+    vit it;
+    dis[1]=0;
+    multiset<pi> m;
+    m.insert(make_pair(0,1));
+    while(!m.empty())
     {
-        return p1.second < p2.second;
-    }
-};
-int main()
-{
-    priority_queue<pp, vector<pp > , Prioritize > Q;
-    int n;
-    cin>>n;
-    vector< pp > G[n+1];
-    int e,u,v,w;
-    cin>>e;
-    for(int i=0;i<e;i++)
-    {
-        cin>>u>>v>>w;
-        G[u].push_back(pp(v,w));
-        G[v].push_back(pp(u,w));
-    }
-    int s;
-    cin>>s;
-    int d[n+1];
-    for(int i=1;i<=n;i++)
-    {
-        d[i] = 999;
-    }
-    d[s] = 0;
-    Q.push(pp(s,d[s]));
-    while(!Q.empty())
-    {
-        u = Q.top().first;
-        Q.pop();
-        int size = G[u].size();
-        for(int i = 0 ; i < size ; i++)
+         pair <int , int> p = *m.begin();
+         x=p.first; y=p.second;
+         m.erase(m.begin());
+         if(visited[y])
+            continue;
+            visited[y]=true;
+
+        for(i=0;i<g[y].size();i++)
         {
-            v = G[u][i].first;
-            w = G[u][i].second;
-            cout<<u<<" "<<v<<" "<<w<<endl;
-            if(d[v] > d[u] + w)
-            {
-                d[v] = d[u] + w;
-                Q.push(pp(v,d[v]));
-            }
+            ii e,w;
+           e=g[y][i].first;
+           w=g[y][i].second;
+          if(dis[e]>w+dis[y])
+          {
+             dis[e]=w+dis[y];
+              m.insert(make_pair(dis[e],e));
+          }
         }
     }
-    for(int i=1; i<=n; i++) printf("Node %d, min weight = %d\n", i, d[i]);
+}
+int main()
+{
+    ii n,m,i;
+    cin>>n>>m;
+    while(m--)
+    {
+        ii a,b,w;
+        cin>>a>>b>>w;
+        g[a].push_back(make_pair(b,w));
+    }
+     logic();
+    for(i=2;i<=n;i++)
+            cout<<dis[i]<<" ";
+       
+
     return 0;
 }
-// credit->Ronzii's Blog
