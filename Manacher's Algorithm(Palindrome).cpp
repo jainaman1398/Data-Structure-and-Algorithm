@@ -1,62 +1,56 @@
-//MANACHER'S ALGORITHM.
-//DEVELOPED BY AMAN JAIN
-#include <iostream>
-#include <string>
-
+// code like a pro,wanna be developer
+// code your way to success.
+// Aman Jain
+#include<bits/stdc++.h>
 using namespace std;
+typedef long long int ii;
 
-void manacher(string t)
+void Manacher(string s)
 {
-    int l=t.size();
-    int pal[l],c,r,i;
-    for(i=0;i<l;i++)
-        pal[i]=0;
-    c=1,r=1;
-    for(i=1;i<l-1;i++)
+    ii r,c,ar[s.size()],i,l,lp;
+    r=1;c=1;
+    memset(ar,0,sizeof(ar));
+    for(i=1;i<s.size();i++)
     {
-        int mirror=2*c-i;
-        if(i<r)
-            pal[i]=min(r-i,pal[mirror]);
-       while(t[i+1+pal[i]]==t[i-1-pal[i]])
-       {
-            pal[i]++;
-       }
-       if(i+pal[i]>r)
-       {
-           c=i;
-           r=i+pal[i];
-
-       }
-
+        ii mirror=c-(i-c);
+        if(r>i){
+            ar[i]=min(r-i,ar[mirror]);
+        }
+        while((s[i+1+ar[i]]==s[i-1-ar[i]])&&((i-1-ar[i])>=0)&&((i+1+ar[i])<s.size()))
+              {
+        ar[i]++;
+        }
+        if(ar[i]+i>r)
+        {
+            r=i+ar[i];
+            c=i;
+        }
 
     }
-    int max=0;
-    for(i=1;i<l;i++)
+   ii max1=ar[0],jk=0;
+    for(i=1;i<s.size();i++)
     {
-        if(max<pal[i])
-            max=pal[i];
-
+        if(ar[i]>max1){
+        max1=ar[i];
+        jk=i;
+        }
     }
-
-    cout<<max;
+    cout<<max1<<endl;
+        for(lp=(jk-(max1-1));lp<=(jk+(max1-1));lp+=2)
+            cout<<s[lp];
 
 }
 
 int main()
 {
-    int i;
-    string str1,str2;
-    cout<<"Enter the String";
-    getline(cin,str1);
-    str2="@"+str1+"&";
-    int m=str1.size();
-    for(i=1;i<=m;i++)
-        str2.insert(i+i,"#");
-        str2.insert(1,"#");
-     // cout<<str2;
-      manacher(str2);
-    return 0;
+    string s,o;
+    ii i;
+    cin>>s;
+    for(i=0;i<s.size();i++)
+    {
+       o+="#"+s.substr(i,1);
+    }
+    o+="#";
+    Manacher(o);
+
 }
-// AMAN JAIN
-
-
