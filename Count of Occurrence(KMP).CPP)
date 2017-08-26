@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+string pat,text;
+ll lps[100001],yo=0;
+
+void kmp()
+{
+    ll i=0,j=0,p,t;
+    p=pat.size();t=text.size();
+
+    while(i<p)
+    {
+        if(pat[i]==text[j])
+        {
+            i++;j++;
+            if(j==t)
+            {
+                j=lps[j];
+                yo++;
+            }
+        }
+        else
+        {
+            if(j!=0)
+            {
+                j=lps[j-1];
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+    cout<<yo;
+}
+
+int main()
+{
+
+    cin>>pat;
+    cin>>text;
+    swap(pat,text);
+    ll i,j,k;
+    j=0;k=1;
+    lps[0]=0;
+    while(k<pat.size())
+    {
+        if(pat[j]==pat[k])
+        {
+            lps[k]=1+lps[k-1];
+            j++;k++;
+        }
+        else
+        {
+            if(j!=0)
+            {
+               j=lps[j-1];
+            }
+            else
+            {
+                lps[k]=0;
+                k++;
+            }
+        }
+    }
+    kmp();
+    return 0;
+}
