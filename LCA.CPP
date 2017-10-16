@@ -66,12 +66,12 @@ int main()
         cin>>b;
         v.push_back(b);
     }
-    ll vihu=v[0];
+    ll aj=v[0];
     for(i=1;i<v.size();i++)
     {
-        vihu=lca(vihu,v[i]);
+        aj=lca(aj,v[i]);
     }
-    cout<<vihu;
+    cout<<aj;
     return 0;
 }
 
