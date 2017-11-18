@@ -8,7 +8,7 @@ struct bstnode
     struct bstnode* right;
     struct bstnode* left;
 };
-int getnewnode(int data)
+struct bstnode* getnewnode(int data)
 {
      struct bstnode* newnode=( struct bstnode*)malloc(sizeof(struct bstnode));
      newnode->data=data;
